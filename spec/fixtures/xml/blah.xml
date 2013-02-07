@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message outcome="success" transactionID="5BE9DC62-D705-4867-9B6A-99E6BA4806B0">
+  <results>
+    <result UPC="" recallNo="12077" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12077.html"
+            recDate="2012-01-03" y2k="112077" manufacturer="Uni-O Industries" type="Grills, Smokers &amp; Accessories"
+            prname="Uni-O Industries Iroda O-Grill and Tailgating Gear Portable Gas Grills"
+            hazard="Fire &amp; Fire-Related Burn" country_mfg="China"/>
+    <result UPC="" recallNo="12078" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12078.html"
+            recDate="2012-01-04" y2k="112078" manufacturer="Performance" type="Bicycles &amp; Accessories"
+            prname="Performance 2011 Forté EPS-R Pro Carbon Road Pedals" hazard="Vehicle Accident"
+            country_mfg="Taiwan"/>
+    <result UPC="" recallNo="12079" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12079.html"
+            recDate="2012-01-05" y2k="112079" manufacturer="IKEA" type="High Chairs/Booster Chairs"
+            prname="IKEA ANTILOP High Chairs" hazard="Fall" country_mfg="China"/>
+    <result UPC="490021010049" recallNo="12080" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12080.html"
+            recDate="2012-01-05" y2k="112080" manufacturer="Target" type="Lights &amp; Accessories"
+            prname="Target 6-pc. LED Flashlight Sets" hazard="Fire &amp; Fire-Related Burn" country_mfg="China"/>
+    <result UPC="" recallNo="12710" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12710.html"
+            recDate="2012-01-05" y2k="112080" manufacturer="Sterno" type="Candles &amp; Candle Holders"
+            prname="Sterno Bulk Pack 5 Hour Tea Lights" hazard="Fire &amp; Fire-Related Burn" country_mfg="Thailand"/>
+    <result UPC="" recallNo="12081" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12081.html"
+            recDate="2012-01-05" y2k="112081" manufacturer="Elegant Gifts Mart" type="Chairs, Stools &amp; Benches"
+            prname="Elegant Gifts Mart Pengko Children's Chairs and Stools" hazard="Lead" country_mfg="China"/>
+    <result UPC="" recallNo="12082" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12082.html"
+            recDate="2012-01-06" y2k="112082" manufacturer="Triple Eight Distribution" type="Bicycles &amp; Accessories"
+            prname="Triple Eight Little Tricky, Sector 9 S/M EPS Liner Bicycle Helmets" hazard="Vehicle Accident"
+            country_mfg="China"/>
+    <result UPC="" recallNo="12711" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12711.html"
+            recDate="2012-01-10" y2k="112082" manufacturer="Land of Nod" type="Beds/Cots"
+            prname="Land of Nod Blake Bed Frames" hazard="Entrapment" country_mfg="Vietnam"/>
+    <result UPC="" recallNo="12084" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12084.html"
+            recDate="2012-01-11" y2k="112084" manufacturer="DD Traders" type="Candles &amp; Candle Holders"
+            prname="Demdaco DD Traders Tien Chi Art Tea Lights in Carruth Candleholder Collection Sets"
+            hazard="Fire &amp; Fire-Related Burn" country_mfg="China"/>
+    <result UPC="" recallNo="12085" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12085.html"
+            recDate="2012-01-11" y2k="112085" manufacturer="Chariot Carriers" type="Bicycle Child Carriers/Trailers"
+            prname="Thule Child Transport Systems, Chariot bicycle trailers, bicycle trailer conversion kits" hazard=""
+            country_mfg="Canada"/>
+    <result UPC="" recallNo="12086" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12086.html"
+            recDate="2012-01-12" y2k="112086" manufacturer="Big Lots" type="Lamps"
+            prname="Big Lots Classic Quarters Five Light Floor Lamps" hazard="Electrocution/Electric Shock"
+            country_mfg="China"/>
+    <result UPC="" recallNo="12087" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12087.html"
+            recDate="2012-01-12" y2k="112087" manufacturer="Kaz" type="Electric Heaters"
+            prname="Kaz USA Ningbo Honecho Honeywell Surround Select Portable Electric Heaters"
+            hazard="Burn - Not Fire-Related" country_mfg="China"/>
+    <result UPC="" recallNo="12088" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12088.html"
+            recDate="2012-01-18" y2k="112088" manufacturer="Giant Bicycle" type="Bicycles &amp; Accessories"
+            prname="Giant Bicycle 2012 Defy, Avail Advanced Bicycles" hazard="Vehicle Accident" country_mfg="Taiwan"/>
+    <result UPC="" recallNo="12712" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12712.html"
+            recDate="2012-01-18" y2k="112088" manufacturer="Steelcase" type="Chairs, Stools &amp; Benches"
+            prname="Steelcase Amia desk chairs" hazard="Fall" country_mfg="United States"/>
+    <result UPC="" recallNo="12089" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12089.html"
+            recDate="2012-01-23" y2k="112089" manufacturer="California Innovations" type="Food Carriers"
+            prname="California Innovations Ci-Sport Expandable Insulated Lunch Box with Freezer Gel Pack"
+            hazard="Poisoning" country_mfg="China"/>
+    <result UPC="" recallNo="12090" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12090.html"
+            recDate="2012-01-23" y2k="112090" manufacturer="California Innovations" type="Food Carriers"
+            prname="California Innovations Travelin' Chef Expandable Thermal Food Carrier" hazard="Poisoning"
+            country_mfg="China"/>
+    <result UPC="" recallNo="12092" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12092.html"
+            recDate="2012-01-24" y2k="112092" manufacturer="Lee Carter" type="Toy Figures"
+            prname="Lee Carter Mexican Super Luchamania Action Figures" hazard="Lead" country_mfg="Mexico"/>
+    <result UPC="" recallNo="12093" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12093.html"
+            recDate="2012-01-24" y2k="112093" manufacturer="Lee Carter" type="Rattles"
+            prname="Lee Carter Infant Rattles" hazard="Choking" country_mfg="Mexico"/>
+    <result UPC="" recallNo="12094" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12094.html"
+            recDate="2012-01-25" y2k="112094" manufacturer="Blount" type="Lawn Mowers &amp; Accessories"
+            prname="Blount International Oregon Replacement Blades Used with Ariens Lawnmowers" hazard="Laceration"
+            country_mfg="United States"/>
+    <result UPC="" recallNo="12095" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12095.html"
+            recDate="2012-01-25" y2k="112095" manufacturer="Euro Asia Imports" type="Bicycles &amp; Accessories"
+            prname="Euro Asia Imports Nitto aluminum bicycle handlebars" hazard="Vehicle Accident" country_mfg="Japan"/>
+    <result UPC="" recallNo="12713" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12713.html"
+            recDate="2012-01-26" y2k="112095" manufacturer="KYMCO" type="Utility, Off-Road Vehicles/Golf Carts"
+            prname="KYMCO Utility Vehicles" hazard="Fire &amp; Fire-Related Burn" country_mfg="Taiwan"/>
+    <result UPC="05698601008-3" recallNo="12714" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12714.html"
+            recDate="2012-01-26" y2k="112095" manufacturer="BJ's Wholesale" type="Lights &amp; Accessories"
+            prname="BJ's Wholesale Club Superex SAFETO GO LED Flashlight and Battery Sets"
+            hazard="Fire &amp; Fire-Related Burn" country_mfg="China"/>
+    <result UPC="" recallNo="12715" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12715.html"
+            recDate="2012-01-26" y2k="112095" manufacturer="Columbia ParCar"
+            type="Utility, Off-Road Vehicles/Golf Carts"
+            prname="Columbia ParCar Eagle Golf Vehicles, Shuttle, Tram Personnel Carriers" hazard="Vehicle Accident"
+            country_mfg="United States"/>
+    <result UPC="" recallNo="12096" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12096.html"
+            recDate="2012-01-31" y2k="112096" manufacturer="Specialized Bicycle Components"
+            type="Bicycles &amp; Accessories"
+            prname="Specialized Bicycle Components 2012 Bicycles with Advanced Group carbon forks"
+            hazard="Vehicle Accident" country_mfg="Taiwan"/>
+    <result UPC="" recallNo="12716" recallURL="http://www.cpsc.gov/cpscpub/prerel/prhtml12/12716.html"
+            recDate="2012-01-31" y2k="112096" manufacturer="Arctic Cat" type="Snowmobiles"
+            prname="Arctic Cat Sno Pro/Limited, High Country, Turbo Snowmobiles" hazard="Vehicle Accident"
+            country_mfg="United States"/>
+  </results>
+</message>
