@@ -99,6 +99,6 @@ By accessing this API, you agree to our [Terms of Service](http://www.usa.gov/Ab
 Feedback
 --------
 
-You can send feedback via [Github Issues](https://github.com/GSA-OCSIT/jobs_api/issues).
+You can send feedback via [Github Issues](https://github.com/GSA-OCSIT/recalls_api/issues).
 
 -----
