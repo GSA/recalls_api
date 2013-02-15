@@ -9,7 +9,7 @@ You can see how this data is used when [searching for recalls on USA.gov](http:/
 
 ## Ruby
 
-You'll need Ruby 1.9.3.
+You'll need [Ruby 1.9.3](http://www.ruby-lang.org/en/downloads/).
 
 ## Gems
 
@@ -20,7 +20,7 @@ We use bundler to manage gems. You can install bundler and other required gems l
 
 ## Solr
 
-We're using Solr for fulltext search. You can start/stop/reindex Solr like this:
+We're using [Solr](http://lucene.apache.org/solr/) for fulltext search. You can start/stop/reindex Solr like this:
 
     bundle exec rake sunspot:solr:start
     bundle exec rake sunspot:solr:stop
@@ -68,7 +68,7 @@ You can specify a a specific JSON version of recalls data like this:
     
 ## Parameters
 
-Additional parameters are listed in the wiki at <https://github.com/GSA-OCSIT/recalls_api/wiki/GET-search>.
+Additional parameters are listed in the Github Wiki at <https://github.com/GSA-OCSIT/recalls_api/wiki/GET-search>.
 
 ## Tests
 
@@ -95,3 +95,10 @@ This project is covered under the terms of the GNU General Public License, versi
 ## Terms of Use
 
 By accessing this API, you agree to our [Terms of Service](http://www.usa.gov/About/developer-resources/terms-of-service.shtml).
+
+Feedback
+--------
+
+You can send feedback via [Github Issues](https://github.com/GSA-OCSIT/jobs_api/issues).
+
+-----
