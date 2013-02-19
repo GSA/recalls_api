@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'rss/2.0'
+require 'nokogiri'
 
 describe 'Recalls API V1' do
   before(:all) do
@@ -200,6 +200,16 @@ describe 'Recalls API V1' do
     end
 
     context 'when format is RSS' do
+      def parse_items(feed)
+        feed.xpath('//item').collect do |item|
+          { link: item.xpath('./link').inner_text,
+            guid: item.xpath('./guid').inner_text,
+            title: item.xpath('./title').inner_text,
+            pub_date: item.xpath('./pubDate').inner_text,
+            description: item.xpath('./description').inner_text }
+        end
+      end
+
       before { get '/recent.rss' }
 
       it 'should respond with status code 200' do
@@ -211,43 +221,44 @@ describe 'Recalls API V1' do
       end
 
       it 'should return recent recalls sorted by date' do
-        recent_feed = RSS::Parser.parse(response.body)
-        recent_feed.items.count.should == 10
+        recent_feed = Nokogiri::XML(response.body)
+        items = parse_items(recent_feed)
+        items.count.should == 10
 
-        item = recent_feed.items[0]
-        item.title.should == 'Food Recall summary'
-        item.link.should == 'http://www.fda.gov/Safety/Recalls/ucm207477.htm'
-        item.description.should == 'Food Recall description'
-        item.pubDate.should == 'Mon, 05 Apr 2010 04:00:00 +0000'
-        item.guid.content.should == 'http://www.fda.gov/Safety/Recalls/ucm207477.htm'
+        item = items[0]
+        item[:title].should == 'Food Recall summary'
+        item[:description].should == 'Food Recall description'
+        item[:link].should == 'http://www.fda.gov/Safety/Recalls/ucm207477.htm'
+        item[:pub_date].should == 'Mon, 05 Apr 2010 00:00:00 +0000'
+        item[:guid].should == 'http://www.fda.gov/Safety/Recalls/ucm207477.htm'
 
-        item = recent_feed.items[1]
-        item.title.should == 'Drug Recall summary'
-        item.link.should == 'http://www.fda.gov/Safety/Recalls/ucm215921.htm'
-        item.description.should == 'Drug Recall description'
-        item.pubDate.should == 'Sat, 03 Apr 2010 04:00:00 +0000'
-        item.guid.content.should == 'http://www.fda.gov/Safety/Recalls/ucm215921.htm'
+        item = items[1]
+        item[:title].should == 'Drug Recall summary'
+        item[:description].should == 'Drug Recall description'
+        item[:link].should == 'http://www.fda.gov/Safety/Recalls/ucm215921.htm'
+        item[:pub_date].should == 'Sat, 03 Apr 2010 00:00:00 +0000'
+        item[:guid].should == 'http://www.fda.gov/Safety/Recalls/ucm215921.htm'
 
-        item = recent_feed.items[2]
-        item.title.should == 'Glass Water Bottles'
-        item.link.should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
-        item.description.should == 'Bottles (Sports/Water/Thermos)'
-        item.pubDate.should == 'Thu, 01 Apr 2010 00:00:00 -0400'
-        item.guid.content.should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
+        item = items[2]
+        item[:title].should == 'Glass Water Bottles'
+        item[:description].should == 'Bottles (Sports/Water/Thermos)'
+        item[:link].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
+        item[:pub_date].should == 'Thu, 01 Apr 2010 00:00:00 +0000'
+        item[:guid].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
 
-        item = recent_feed.items[3]
-        item.title.should == 'Baby Stroller can be dangerous to children'
-        item.link.should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
-        item.description.should == 'Dangerous Stuff'
-        item.pubDate.should == 'Mon, 01 Mar 2010 05:00:00 +0000'
-        item.guid.content.should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
+        item = items[3]
+        item[:title].should == 'Baby Stroller can be dangerous to children'
+        item[:description].should == 'Dangerous Stuff'
+        item[:link].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
+        item[:pub_date].should == 'Mon, 01 Mar 2010 00:00:00 +0000'
+        item[:guid].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
 
-        item = recent_feed.items[4]
-        item.title.should == 'FUEL SYSTEM, GASOLINE:DELIVERY:FUEL PUMP compound FROM MONACO COACH CORPORATION'
-        item.link.should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
-        item.description.should == 'Recalls for: automaker1 / model1, automaker2 / model2'
-        item.pubDate.should == 'Fri, 01 Jan 2010 05:00:00 +0000'
-        item.guid.content.should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
+        item = items[4]
+        item[:title].should == 'FUEL SYSTEM, GASOLINE:DELIVERY:FUEL PUMP compound FROM MONACO COACH CORPORATION'
+        item[:description].should == 'Recalls for: automaker1 / model1, automaker2 / model2'
+        item[:link].should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
+        item[:pub_date].should == 'Fri, 01 Jan 2010 00:00:00 +0000'
+        item[:guid].should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
       end
     end
   end

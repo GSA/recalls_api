@@ -11,7 +11,7 @@ xml.rss(:version => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom") do
         xml.title recall.summary
         xml.description recall.description
         xml.link recall.recall_url
-        xml.pubDate recall.recalled_on.to_time.utc.to_s(:rfc822)
+        xml.pubDate recall.recalled_on.strftime('%a, %d %b %Y 00:00:00 +0000')
         xml.guid recall.recall_url
       end
     end
