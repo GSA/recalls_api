@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - '1.9.3'
+before_script:
+  - mysql -e 'create database recalls_api_test;'
+  - bundle exec rake db:setup RAILS_ENV=test
+  - bundle exec rake sunspot:solr:start RAILS_ENV=test
+after_script:
+  - bundle exec rake sunspot:solr:stop RAILS_ENV=test
