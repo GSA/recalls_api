@@ -1,6 +1,8 @@
 Recalls API Server
 ==============
 
+[![Build Status](https://travis-ci.org/GSA-OCSIT/recalls_api.png)](https://travis-ci.org/GSA-OCSIT/recalls_api)
+
 ## Purpose
 
 The Recalls API Server provides access to searchable food, car, and product safety data and recalls. This data comes from three federal government sources: (1) food safety data from [FoodSafety.gov](http://www.foodsafety.gov); (2) car safety data from the [National Highway Traffic Safety Administration](http://www.nhtsa.gov/); and (3) product safety data from the [Consumer Product Safety Commission](http://www.cpsc.gov). 
