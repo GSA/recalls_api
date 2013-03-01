@@ -5,6 +5,7 @@ gem 'rails-api'
 gem 'mysql2'
 gem 'thin'
 gem 'sunspot_rails'
+gem 'rack-contrib'
 
 gem 'airbrake'
 gem 'newrelic_rpm'
