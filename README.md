@@ -3,24 +3,32 @@ Recalls API Server
 
 [![Build Status](https://travis-ci.org/GSA-OCSIT/recalls_api.png)](https://travis-ci.org/GSA-OCSIT/recalls_api)
 
-## Purpose
+When you're buying and using products, safety comes first. 
 
-The Recalls API Server provides access to searchable food, car, and product safety data and recalls. This data comes from three federal government sources: (1) food safety data from [FoodSafety.gov](http://www.foodsafety.gov); (2) car safety data from the [National Highway Traffic Safety Administration](http://www.nhtsa.gov/); and (3) product safety data from the [Consumer Product Safety Commission](http://www.cpsc.gov). 
+## Access the Data
 
-You can see how this data is used when [searching for recalls on USA.gov](http://search.usa.gov/search/news?affiliate=usagov&channel=66).
+Use our [Recalls API](http://usasearch.howto.gov/developer/recalls.html) to tap into a list of car, drug, food, and product safety data and recalls.
 
-## Ruby
+Se the most recent recalls in [JSON](http://api.usa.gov/recalls/recent.json) or [RSS](http://api.usa.gov/recalls/recent.rss).
+
+You can also see how this data is used when [searching for recalls on USA.gov](http://search.usa.gov/search/news?affiliate=usagov&channel=66).
+
+## Contribute to the Code
+
+The server code that runs our [Recalls API](http://usasearch.howto.gov/developer/recalls.html) is here on Github. If you're a Ruby developer, keep reading. Fork this repo to add features (such as additional datasets) or fix bugs.
+
+### Ruby
 
 You'll need [Ruby 1.9.3](http://www.ruby-lang.org/en/downloads/).
 
-## Gems
+### Gems
 
 We use bundler to manage gems. You can install bundler and other required gems like this:
 
     gem install bundler
     bundle install
 
-## Solr
+### Solr
 
 We're using [Solr](http://lucene.apache.org/solr/) for fulltext search. You can start/stop/reindex Solr like this:
 
@@ -29,16 +37,16 @@ We're using [Solr](http://lucene.apache.org/solr/) for fulltext search. You can 
     bundle exec rake sunspot:solr:run
     bundle exec rake sunspot:solr:reindex
 
-## Database
+### Database
 
-The database.yml file assumes you have a local database server up and running (preferably MySQL >= 5.1.65), accessible from user 'root' with no password.
+`database.yml` assumes you have a local database server up and running (preferably [MySQL](http://www.mysql.com/) >= 5.1.65), accessible from user 'root' with no password.
 
 Create and setup your development and test databases:
 
     bundle exec rake db:setup
     bundle exec rake db:setup RAILS_ENV=test
 
-## Seed data
+### Seed data
 
 Populate recall data for your development database:
 
@@ -48,7 +56,7 @@ Populate recall data for your development database:
 
 You need to run these tasks daily to receive the latest recalls data.
 
-## Running it
+### Running it
 
 Fire up a server and try it all out:
 
@@ -56,11 +64,7 @@ Fire up a server and try it all out:
 
 <http://127.0.0.1:3000/search.json?query=stroller>
 
-You view the most recent recalls in [JSON](http://127.0.0.1:3000/recent.json) or [RSS](http://127.0.0.1:3000/recent.rss).
-
-You can use browser extensions to view json data such as extensions for [Chrome](https://chrome.google.com/webstore/search/json?hl=en-US) or [Firefox](https://addons.mozilla.org/en-US/firefox/search/?q=json).
-
-## API Versioning
+### API Versioning
 
 We support API versioning with json format. The current version is v1.
 
@@ -68,9 +72,11 @@ You can specify a a specific JSON version of recalls data like this:
 
     curl -H 'Accept: application/vnd.usagov.recalls.v1' http://localhost:3000/search.json
     
-## Parameters
+### Parameters
 
-Additional parameters are listed in the Github Wiki at <https://github.com/GSA-OCSIT/recalls_api/wiki/GET-search>.
+Seven generic parameters are accepted: (1) query, (2) organization, (3) start_date, (4) end_date, (5) page, (6) per_page, and (7) sort. There are additional parameters that are specific to food, product, and car safety recalls. None are required.
+
+Full documentation on the parameters is in our [Recalls API documentation](http://usasearch.howto.gov/developer/recalls.html#parameters).
 
 ## Tests
 
@@ -96,7 +102,7 @@ This project is covered under the terms of the GNU General Public License, versi
 
 ## Terms of Use
 
-By accessing this API, you agree to our [Terms of Service](http://www.usa.gov/About/developer-resources/terms-of-service.shtml).
+By accessing this Recalls API server, you agree to our [Terms of Service](http://www.usa.gov/About/developer-resources/terms-of-service.shtml).
 
 Feedback
 --------
