@@ -9,7 +9,7 @@ When you're buying and using products, safety comes first.
 
 Use our [Recalls API](http://usasearch.howto.gov/developer/recalls.html) to tap into a list of car, drug, food, and product safety data and recalls.
 
-Se the most recent recalls in [JSON](http://api.usa.gov/recalls/recent.json) or [RSS](http://api.usa.gov/recalls/recent.rss).
+See the most recent recalls in [JSON](http://api.usa.gov/recalls/recent.json) or [RSS](http://api.usa.gov/recalls/recent.rss).
 
 You can also see how this data is used when [searching for recalls on USA.gov](http://search.usa.gov/search/news?affiliate=usagov&channel=66).
 
