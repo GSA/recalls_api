@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>FSIS Recalls</title>
+    <link>http://www.fsis.usda.gov/Fsis_Recalls/Open_Federal_Cases/index.asp</link>
+    <description>
+        </description>
+    <language>en</language>
+    <pubDate>Wed, 29 Jul 2009 12:08:02 -0400</pubDate>
+    <lastBuildDate>Wed, 11 Apr 2012 23:01:25 GMT</lastBuildDate>
+    <item>
+      <title>original Louisiana Firm Recalls Cooked Meat, Poultry, and Deli Products Due To Possible Listeria Monocytogenes Contamination</title>
+      <link>http://www.fsis.usda.gov/News_&amp;_Events/Recall_028_2013_Expanded/index.asp</link>
+      <description>Manda Packing Company, a Baker, La., establishment, is expanding its recall to include approximately 468,000 pounds of roast beef, ham, turkey breast, tasso pork, ham shanks, hog head cheese, corned beef, and pastrami due to possible contamination with Listeria monocytogenes.</description>
+      <pubDate>Fri, 12 Apr 2013 22:03:15 -0400</pubDate>
+      <guid isPermaLink="false">D4B79943-B12B-462A-A8AB-1AE3D17F24E0</guid>
+    </item>
+  </channel>
+</rss>

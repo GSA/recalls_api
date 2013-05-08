@@ -6,11 +6,11 @@ class Recall < ActiveRecord::Base
 
   validates_presence_of :organization, :recall_number
 
-  CDC = 'CDC'.freeze
+  FDA = 'FDA'.freeze
+  USDA = 'USDA'.freeze
+  FOOD_AND_DRUG = [FDA, USDA].freeze
   CPSC = 'CPSC'.freeze
   NHTSA = 'NHTSA'.freeze
-
-  VALID_ORGANIZATIONS = [CDC, CPSC, NHTSA].freeze
 
   CDC_HIGHLIGHTED_FIELDS = %w(summary description).freeze
 
@@ -88,15 +88,15 @@ class Recall < ActiveRecord::Base
     end
 
     text :food_recall_summary, stored: true do
-      food_recall.summary if cdc?
+      food_recall.summary if food_or_drug?
     end
 
     text :food_recall_description, stored: true do
-      food_recall.description if cdc?
+      food_recall.description if food_or_drug?
     end
 
     string :food_type do
-      food_recall.food_type if cdc?
+      food_recall.food_type if food_or_drug?
     end
   end
 
@@ -114,6 +114,7 @@ class Recall < ActiveRecord::Base
 
     instrument_query = { model: self.name, term: query }.
         merge(options.except(:query, :page, :per_page))
+    organizations = options[:organization].to_s.upcase.sub(/CDC/, 'FDA USDA').split.uniq
 
     ActiveSupport::Notifications.instrument('solr_search.usagov', query: instrument_query) do
       search do
@@ -121,7 +122,7 @@ class Recall < ActiveRecord::Base
           highlight
         end
 
-        with(:organization, options[:organization].upcase) unless options[:organization].blank?
+        with(:organization, organizations) unless organizations.empty?
 
         # date range fields
         with(:recalled_on).greater_than(options[:start_date]) if options[:start_date].present?
@@ -151,8 +152,8 @@ class Recall < ActiveRecord::Base
     nil
   end
 
-  def cdc?
-    organization == CDC
+  def food_or_drug?
+    FOOD_AND_DRUG.include?(organization)
   end
 
   def cpsc?
@@ -168,7 +169,7 @@ class Recall < ActiveRecord::Base
     return result_hash unless hit.highlights.present?
 
     case
-    when cdc?
+    when food_or_drug?
       CDC_HIGHLIGHTED_FIELDS.each do |cdc_field|
         field_name_sym = "food_recall_#{cdc_field}".to_sym
         highlighted_value = highlight_field(hit, field_name_sym)
@@ -196,7 +197,7 @@ class Recall < ActiveRecord::Base
                     recall_url: recall_url }
 
     detail_hash = case
-                  when cdc? then cdc_hash
+                  when food_or_drug? then cdc_hash
                   when cpsc? then cpsc_hash
                   when nhtsa? then nhtsa_hash
                   end
@@ -233,7 +234,7 @@ class Recall < ActiveRecord::Base
 
   def recall_url
     case
-    when cdc?
+    when food_or_drug?
       food_recall.url
     when cpsc?
       "http://www.cpsc.gov/cpscpub/prerel/prhtml#{self.recall_number.to_s[0..1]}/#{self.recall_number}.html" unless self.recall_number.blank?
@@ -244,7 +245,7 @@ class Recall < ActiveRecord::Base
 
   def summary
     summary = case
-              when cdc? then food_recall.summary
+              when food_or_drug? then food_recall.summary
               when cpsc? then cpsc_summary
               when nhtsa? then nhtsa_summary
               end
@@ -253,7 +254,7 @@ class Recall < ActiveRecord::Base
 
   def description
     case
-    when cdc?
+    when food_or_drug?
       food_recall.description
     when cpsc?
       product_types = recall_details_hash[:product_type] || []

@@ -154,6 +154,7 @@ DEPENDENCIES
   capistrano
   mysql2
   newrelic_rpm
+  nokogiri
   rack-contrib
   rails (= 3.2.12)
   rails-api

@@ -3,7 +3,7 @@ require 'nokogiri'
 
 describe 'Recalls API V1' do
   before(:all) do
-    Recall.create!(organization: 'CDC',
+    Recall.create!(organization: 'FDA',
                    recall_number: Digest::MD5.hexdigest('http://www.fda.gov/Safety/Recalls/ucm215921.htm')[0, 10],
                    recalled_on: Date.parse('2010-04-03')) do |r|
       r.build_food_recall(description: 'Drug Recall description',
@@ -12,7 +12,7 @@ describe 'Recalls API V1' do
                           url: 'http://www.fda.gov/Safety/Recalls/ucm215921.htm')
     end
 
-    Recall.create!(organization: 'CDC',
+    Recall.create!(organization: 'FDA',
                    recall_number: Digest::MD5.hexdigest('http://www.fda.gov/Safety/Recalls/ucm207477.htm')[0, 10],
                    recalled_on: Date.parse('2010-04-05')) do |r|
       r.build_food_recall(description: 'Food Recall description',
@@ -21,8 +21,17 @@ describe 'Recalls API V1' do
                           url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm')
     end
 
+    Recall.create!(organization: 'USDA',
+                   recall_number: Digest::MD5.hexdigest('http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp')[0, 10],
+                   recalled_on: Date.parse('2013-04-12')) do |r|
+      r.build_food_recall(description: 'USDA Food Recall description',
+                          food_type: 'food',
+                          summary: 'USDA Food Recall summary',
+                          url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp')
+    end
+
     10.upto(18) do |i|
-      Recall.create!(organization: 'CDC',
+      Recall.create!(organization: 'FDA',
                      recall_number: Digest::MD5.hexdigest("http://www.fda.gov/Safety/Recalls/ucm2159#{i}.htm")[0, 10],
                      recalled_on: Date.parse("2005-04-#{i}")) do |r|
         r.build_food_recall(description: "Drug Recall description #{i}",
@@ -118,24 +127,32 @@ describe 'Recalls API V1' do
 
       it 'should return recent recalls sorted by date' do
         recent_hash = JSON.parse(response.body, symbolize_names: true)
-        recent_hash[:success][:total].should == 14
+        recent_hash[:success][:total].should == 15
 
         item = recent_hash[:success][:results][0]
-        item.should == { organization: 'CDC',
+        item.should == { organization: 'USDA',
+                         recall_number: 'b4e5a49f9c',
+                         recall_date: '2013-04-12',
+                         recall_url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp',
+                         description: 'USDA Food Recall description',
+                         summary: 'USDA Food Recall summary' }
+
+        item = recent_hash[:success][:results][1]
+        item.should == { organization: 'FDA',
                          recall_number: '2ef7340756',
                          recall_date: '2010-04-05',
                          recall_url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm',
                          description: 'Food Recall description',
                          summary: 'Food Recall summary' }
 
-        item = recent_hash[:success][:results][1]
-        item.should == { organization: 'CDC',
+        item = recent_hash[:success][:results][2]
+        item.should == { organization: 'FDA',
                          recall_number: '7de417aef9',
                          recall_date: '2010-04-03',
                          recall_url: 'http://www.fda.gov/Safety/Recalls/ucm215921.htm',
                          description: 'Drug Recall description', summary: 'Drug Recall summary' }
 
-        item = recent_hash[:success][:results][2]
+        item = recent_hash[:success][:results][3]
         item.should == { organization: 'CPSC',
                          recall_number: '10187',
                          recall_date: '2010-04-01',
@@ -147,7 +164,7 @@ describe 'Recalls API V1' do
                          hazards: %w(Laceration),
                          countries: %w(China) }
 
-        item = recent_hash[:success][:results][3]
+        item = recent_hash[:success][:results][4]
         item.should == { organization: 'CPSC',
                          recall_number: '12345',
                          recall_date: '2010-03-01',
@@ -159,7 +176,7 @@ describe 'Recalls API V1' do
                          hazards: ['Horrible Choking'],
                          countries: ['United States'] }
 
-        item = recent_hash[:success][:results][4]
+        item = recent_hash[:success][:results][5]
         item.should == {
             organization: Recall::NHTSA,
             recall_number: '123456',
@@ -226,34 +243,41 @@ describe 'Recalls API V1' do
         items.count.should == 10
 
         item = items[0]
+        item[:title].should == 'USDA Food Recall summary'
+        item[:description].should == 'USDA Food Recall description'
+        item[:link].should == 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp'
+        item[:pub_date].should == 'Fri, 12 Apr 2013 00:00:00 +0000'
+        item[:guid].should == 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp'
+
+        item = items[1]
         item[:title].should == 'Food Recall summary'
         item[:description].should == 'Food Recall description'
         item[:link].should == 'http://www.fda.gov/Safety/Recalls/ucm207477.htm'
         item[:pub_date].should == 'Mon, 05 Apr 2010 00:00:00 +0000'
         item[:guid].should == 'http://www.fda.gov/Safety/Recalls/ucm207477.htm'
 
-        item = items[1]
+        item = items[2]
         item[:title].should == 'Drug Recall summary'
         item[:description].should == 'Drug Recall description'
         item[:link].should == 'http://www.fda.gov/Safety/Recalls/ucm215921.htm'
         item[:pub_date].should == 'Sat, 03 Apr 2010 00:00:00 +0000'
         item[:guid].should == 'http://www.fda.gov/Safety/Recalls/ucm215921.htm'
 
-        item = items[2]
+        item = items[3]
         item[:title].should == 'Glass Water Bottles'
         item[:description].should == 'Bottles (Sports/Water/Thermos)'
         item[:link].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
         item[:pub_date].should == 'Thu, 01 Apr 2010 00:00:00 +0000'
         item[:guid].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
 
-        item = items[3]
+        item = items[4]
         item[:title].should == 'Baby Stroller can be dangerous to children'
         item[:description].should == 'Dangerous Stuff'
         item[:link].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
         item[:pub_date].should == 'Mon, 01 Mar 2010 00:00:00 +0000'
         item[:guid].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
 
-        item = items[4]
+        item = items[5]
         item[:title].should == 'FUEL SYSTEM, GASOLINE:DELIVERY:FUEL PUMP compound FROM MONACO COACH CORPORATION'
         item[:description].should == 'Recalls for: automaker1 / model1, automaker2 / model2'
         item[:link].should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
@@ -265,8 +289,8 @@ describe 'Recalls API V1' do
 
   describe 'GET /search.json' do
     context 'when format is JSON' do
-      context 'when searching for CDC data with query' do
-        before { get '/search.json', organization: 'cdc', query: 'food' }
+      context 'when searching for food data with query' do
+        before { get '/search.json', organization: 'FDA', query: 'food' }
 
         it 'should respond with status code 200' do
           response.status.should == 200
@@ -281,7 +305,7 @@ describe 'Recalls API V1' do
           cdc_hash[:success][:total].should == 1
 
           item = cdc_hash[:success][:results].first
-          item.should == { organization: 'CDC',
+          item.should == { organization: 'FDA',
                            recall_number: '2ef7340756',
                            recall_date: '2010-04-05',
                            recall_url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm',
@@ -296,15 +320,23 @@ describe 'Recalls API V1' do
 
           it 'should return with highlighted CDC data' do
             cdc_hash = JSON.parse(response.body, symbolize_names: true)
-            cdc_hash[:success][:total].should == 1
+            cdc_hash[:success][:total].should == 2
 
             item = cdc_hash[:success][:results].first
-            item.should == { organization: 'CDC',
+            item.should == { organization: 'FDA',
                              recall_number: '2ef7340756',
                              recall_date: '2010-04-05',
                              recall_url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm',
                              description: "\uE000Food\uE001 Recall description",
                              summary: "\uE000Food\uE001 Recall summary" }
+
+            item = cdc_hash[:success][:results].last
+            item.should == { organization: 'USDA',
+                             recall_number: 'b4e5a49f9c',
+                             recall_date: '2013-04-12',
+                             recall_url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp',
+                             description: "USDA \uE000Food\uE001 Recall description",
+                             summary: "USDA \uE000Food\uE001 Recall summary" }
           end
         end
       end
@@ -466,8 +498,8 @@ describe 'Recalls API V1' do
 
         it 'should return with recalls with start_date' do
           recalls_hash = JSON.parse(response.body, symbolize_names: true)
-          recalls_hash[:success][:total].should == 3
-          recalls_hash[:success][:results].count.should == 3
+          recalls_hash[:success][:total].should == 4
+          recalls_hash[:success][:results].count.should == 4
         end
       end
 
@@ -486,17 +518,17 @@ describe 'Recalls API V1' do
 
         it 'should return auto recalls with matching year' do
           recalls_hash = JSON.parse(response.body, symbolize_names: true)
-          recalls_hash[:success][:total].should == 14
-          recalls_hash[:success][:results].count.should == 6
+          recalls_hash[:success][:total].should == 15
+          recalls_hash[:success][:results].count.should == 7
         end
       end
 
-      context 'when searching for recalls with sort' do
+      context 'when searching for recalls with sort by date' do
         before { get '/search.json', sort: 'date' }
 
-        it 'should return auto recalls with matching year' do
+        it 'should return the latest recall' do
           recalls_hash = JSON.parse(response.body, symbolize_names: true)
-          recalls_hash[:success][:results].first[:recall_date].should == '2010-04-05'
+          recalls_hash[:success][:results].first[:recall_date].should == '2013-04-12'
         end
       end
 
@@ -505,8 +537,9 @@ describe 'Recalls API V1' do
 
         it 'should return with recalls with start_date' do
           recalls_hash = JSON.parse(response.body, symbolize_names: true)
-          recalls_hash[:success][:total].should == 1
+          recalls_hash[:success][:total].should == 2
           recalls_hash[:success][:results].first[:summary].should == 'Food Recall summary'
+          recalls_hash[:success][:results].last[:summary].should == 'USDA Food Recall summary'
         end
       end
 

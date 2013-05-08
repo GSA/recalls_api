@@ -42,9 +42,9 @@ describe Recall do
       end
     end
 
-    context 'when organization is CDC' do
+    context 'when organization is FDA' do
       let(:recall) do
-        Recall.new(organization: Recall::CDC,
+        Recall.new(organization: Recall::FDA,
                    recall_number: '123456',
                    recalled_on: Date.parse('2012-01-01'))
       end
@@ -62,7 +62,7 @@ describe Recall do
       end
 
       it 'should populate as_json with summary and description' do
-        recall.as_json.should == { organization: Recall::CDC,
+        recall.as_json.should == { organization: Recall::FDA,
                                    recall_number: '123456',
                                    recall_date: '2012-01-01',
                                    recall_url: 'http://some.url.to/cdc',
@@ -208,8 +208,8 @@ describe Recall do
   end
 
   describe '#recall_url' do
-    context 'when organization is CDC' do
-      let(:recall) { Recall.new(organization: 'CDC') }
+    context 'when organization is a food/drug agency' do
+      let(:recall) { Recall.new(organization: 'FDA') }
 
       before do
         food_recall = mock_model(FoodRecall, url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm')
@@ -233,8 +233,8 @@ describe Recall do
   end
 
   describe '#summary' do
-    context 'when organization is CDC' do
-      subject(:recall) { Recall.new(organization: 'CDC') }
+    context 'when organization is a food/drug agency' do
+      subject(:recall) { Recall.new(organization: Recall::FDA) }
 
       before do
         recall.should_receive(:food_recall).
@@ -276,8 +276,8 @@ describe Recall do
   end
 
   describe '#description' do
-    context 'when organization is CDC' do
-      subject(:recall) { Recall.new(organization: 'CDC') }
+    context 'when organization is a food/drug agency' do
+      subject(:recall) { Recall.new(organization: Recall::USDA) }
 
       before do
         recall.should_receive(:food_recall).
