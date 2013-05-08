@@ -14,7 +14,6 @@ describe Api::V1::RecallsController do
       end
 
       it { should respond_with(:success) }
-      it { should respond_with_content_type(:json) }
 
       it 'should respond with search results' do
         response_hash = JSON.parse(response.body, symbolize_names: true)
@@ -29,7 +28,6 @@ describe Api::V1::RecallsController do
       end
 
       it { should respond_with(:success) }
-      it { should respond_with_content_type(:rss) }
     end
   end
 
@@ -72,7 +70,6 @@ describe Api::V1::RecallsController do
     end
 
     it { should respond_with(:success) }
-    it { should respond_with_content_type(/json/) }
 
     it 'should respond with search results' do
       response_hash = JSON.parse(response.body, symbolize_names: true)

@@ -15,7 +15,7 @@ gem 'capistrano', group: :development
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'sunspot_solr'
+  gem 'sunspot_solr', '~>1.3'
 end
 
 group :test do
