@@ -30,7 +30,7 @@ describe NhtsaData do
         recall_details['Initiator'].should == 'MFR'
         recall_details['ReportDate'].should == '20020426'
         recall_details['DefectSummary'].should =~ /^GLOVE COMPARTMENT ORGANIZER SENT AS A FREE GIFT FOR A NEW CONSUMER REPORTS SUBSCRIPTION/
-        recall_details['ConsequenceSummary'].should == 'IMPROPER INFLATION OF TIRES CAN POSE A SAFETY HAZARD.  AN OVERHEATED FLASHLIGHT COULD RESULT IN BURNS.'
+        recall_details['ConsequenceSummary'].should == 'IMPROPER INFLATION OF TIRES CAN POSE A SAFETY HAZARD. AN OVERHEATED FLASHLIGHT COULD RESULT IN BURNS.'
         recall_details['CorrectiveSummary'].should =~ /^CUSTOMERS SHOULD REMOVE THE BATTERIES FROM THE FLASHLIGH IMMEDIATELY/
         recall_details['Notes'].should =~ /^ALSO, CUSTOMERS CAN CONTACT THE NATIONAL HIGHWAY TRAFFIC SAFETY ADMINISTRATION\'S/
         recall_details['RecallSubject'].should == 'CONSUMER UNION/GLOVE COMPARTMENT KIT'

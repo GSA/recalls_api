@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'spec_helper'
 require 'nokogiri'
 
@@ -24,7 +25,7 @@ describe 'Recalls API V1' do
     Recall.create!(organization: 'USDA',
                    recall_number: Digest::MD5.hexdigest('http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp')[0, 10],
                    recalled_on: Date.parse('2013-04-12')) do |r|
-      r.build_food_recall(description: 'USDA Food Recall description',
+      r.build_food_recall(description: 'USDA Food Recall description on AwesomeBrand&reg;',
                           food_type: 'food',
                           summary: 'USDA Food Recall summary',
                           url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp')
@@ -134,7 +135,7 @@ describe 'Recalls API V1' do
                          recall_number: 'b4e5a49f9c',
                          recall_date: '2013-04-12',
                          recall_url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp',
-                         description: 'USDA Food Recall description',
+                         description: 'USDA Food Recall description on AwesomeBrand®',
                          summary: 'USDA Food Recall summary' }
 
         item = recent_hash[:success][:results][1]
@@ -244,7 +245,7 @@ describe 'Recalls API V1' do
 
         item = items[0]
         item[:title].should == 'USDA Food Recall summary'
-        item[:description].should == 'USDA Food Recall description'
+        item[:description].should == 'USDA Food Recall description on AwesomeBrand®'
         item[:link].should == 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp'
         item[:pub_date].should == 'Fri, 12 Apr 2013 00:00:00 +0000'
         item[:guid].should == 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp'
@@ -314,30 +315,44 @@ describe 'Recalls API V1' do
         end
       end
 
+      context 'when searching for CDC data with name that ends with symbols' do
+        before { get '/search.json', organization: 'USDA', query: 'awesomebrand' }
+
+        it 'should return matching recall' do
+          cdc_hash = JSON.parse(response.body, symbolize_names: true)
+          cdc_hash[:success][:total].should == 1
+          item = cdc_hash[:success][:results].first
+          item.should == { organization: 'USDA',
+                           recall_number: 'b4e5a49f9c',
+                           recall_date: '2013-04-12',
+                           recall_url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp',
+                           description: 'USDA Food Recall description on AwesomeBrand®',
+                           summary: 'USDA Food Recall summary' }
+        end
+      end
+
       context 'when searching for CDC data with highlighting option' do
-        context 'when searching for CDC data with query' do
-          before { get '/search.json', organization: 'cdc', query: 'food', hl: '1' }
+        before { get '/search.json', organization: 'cdc', query: 'food', hl: '1' }
 
-          it 'should return with highlighted CDC data' do
-            cdc_hash = JSON.parse(response.body, symbolize_names: true)
-            cdc_hash[:success][:total].should == 2
+        it 'should return with highlighted CDC data' do
+          cdc_hash = JSON.parse(response.body, symbolize_names: true)
+          cdc_hash[:success][:total].should == 2
 
-            item = cdc_hash[:success][:results].first
-            item.should == { organization: 'FDA',
-                             recall_number: '2ef7340756',
-                             recall_date: '2010-04-05',
-                             recall_url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm',
-                             description: "\uE000Food\uE001 Recall description",
-                             summary: "\uE000Food\uE001 Recall summary" }
+          item = cdc_hash[:success][:results].first
+          item.should == { organization: 'FDA',
+                           recall_number: '2ef7340756',
+                           recall_date: '2010-04-05',
+                           recall_url: 'http://www.fda.gov/Safety/Recalls/ucm207477.htm',
+                           description: "\uE000Food\uE001 Recall description",
+                           summary: "\uE000Food\uE001 Recall summary" }
 
-            item = cdc_hash[:success][:results].last
-            item.should == { organization: 'USDA',
-                             recall_number: 'b4e5a49f9c',
-                             recall_date: '2013-04-12',
-                             recall_url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp',
-                             description: "USDA \uE000Food\uE001 Recall description",
-                             summary: "USDA \uE000Food\uE001 Recall summary" }
-          end
+          item = cdc_hash[:success][:results].last
+          item.should == { organization: 'USDA',
+                           recall_number: 'b4e5a49f9c',
+                           recall_date: '2013-04-12',
+                           recall_url: 'http://www.fsis.usda.gov/News_&_Events/Recall_028_2013_Expanded/index.asp',
+                           description: "USDA \uE000Food\uE001 Recall description on AwesomeBrand®",
+                           summary: "USDA \uE000Food\uE001 Recall summary" }
         end
       end
 

@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe CdcData do
@@ -41,7 +42,7 @@ describe CdcData do
         recall = recalls[1]
         recall.url.should == 'http://www.fsis.usda.gov/fsis_recalls/RNR_067_2012/index.asp'
         recall.summary.should == 'Recall Notification Report 067-2012 (Maple Links and Maple Patties)'
-        recall.description.should == 'BEF Foods Inc., a Columbus, Ohio, corporation, is recalling approximately 1,768,600 pounds of Bob Evans Maple Links and Maple Patties because they are misbranded in that they contain monosodium glutamate (MSG), which is not declared on the label.'
+        recall.description.should == 'BEF Foods Inc., a Columbus, Ohio, corporation, is recalling approximately 1,768,600 pounds of Bob Evans® Maple Links and Maple Patties because they are misbranded in that they contain monosodium glutamate (MSG), which is not declared on the label.'
         recall.food_type.should == 'food'
         recall.recall.recalled_on.should == Date.parse('Mon, 22 Oct 2012')
         recall.recall.organization.should == 'USDA'

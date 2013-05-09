@@ -7,6 +7,7 @@ gem 'thin'
 gem 'sunspot_rails', '~>1.3'
 gem 'rack-contrib'
 gem 'nokogiri'
+gem 'sanitize'
 
 gem 'airbrake'
 gem 'newrelic_rpm'

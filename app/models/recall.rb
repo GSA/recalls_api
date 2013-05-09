@@ -114,10 +114,17 @@ class Recall < ActiveRecord::Base
 
     instrument_query = { model: self.name, term: query }.
         merge(options.except(:query, :page, :per_page))
-    organizations = options[:organization].to_s.upcase.sub(/CDC/, 'FDA USDA').split.uniq
+    organizations = options[:organization].to_s.upcase.sub(/\bCDC\b/, 'FDA USDA').split.uniq
+
+    includes = []
+    if organizations.present?
+      includes << :recall_details if organizations.include?(CPSC) || organizations.include?(NHTSA)
+      includes << :auto_recalls if organizations.include?(NHTSA)
+      includes << :food_recall if organizations.include?(FDA) || organizations.include?(USDA)
+    end
 
     ActiveSupport::Notifications.instrument('solr_search.usagov', query: instrument_query) do
-      search do
+      search include: includes do
         fulltext query do
           highlight
         end

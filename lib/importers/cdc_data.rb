@@ -5,7 +5,7 @@ class CdcData
       RSS::Parser.parse(Net::HTTP.get(URI(url))).items.each do |item|
         next if item.link.blank? or item.title.blank? or item.description.blank?
 
-        recall_url = fetch_source_url(item.link)
+        recall_url = fetch_source_url(item.link.strip)
         food_recall = FoodRecall.where(url: recall_url).first_or_initialize
         food_recall.description = item.description
         food_recall.food_type = food_type
@@ -17,7 +17,7 @@ class CdcData
         next unless recall.new_record? || authoritative_source
         recall.recalled_on = item.pubDate.to_date
         recall.food_recall = food_recall
-        recall.save
+        food_recall.save if recall.save
       end
     rescue => e
       Rails.logger.error(e.message)
