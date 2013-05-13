@@ -106,12 +106,6 @@ class Recall < ActiveRecord::Base
 
   def self.search_for(options = {})
     query = preprocess(options[:query]) || nil
-    page = options[:page].to_i
-    page = 1 unless (1..20).include?(page)
-
-    per_page = options[:per_page].to_i
-    per_page = 10 unless (1..50).include?(per_page)
-
     instrument_query = { model: self.name, term: query }.
         merge(options.except(:query, :page, :per_page))
     organizations = options[:organization].to_s.upcase.sub(/\bCDC\b/, 'FDA USDA').split.uniq
@@ -151,7 +145,7 @@ class Recall < ActiveRecord::Base
           order_by :recalled_on, :desc
         end
 
-        paginate page: page, per_page: per_page
+        paginate page: options[:page], per_page: options[:per_page]
       end
     end
   rescue RSolr::Error::Http => error

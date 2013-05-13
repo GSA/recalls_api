@@ -22,18 +22,19 @@ class Api::V1::RecallsController < ApplicationController
   private
 
   def index_params
-    params.slice(:page, :per_page)
+    { page: @page, per_page: @per_page }
   end
 
   def search_params
-    @search_params ||= params.slice(:query,
-                                    :organization,
-                                    :start_date, :end_date,
-                                    :food_type,
-                                    :upc,
-                                    :make, :model, :year, :code,
-                                    :page, :per_page,
-                                    :sort,
-                                    :hl)
+    params.slice(:query,
+                 :organization,
+                 :start_date, :end_date,
+                 :food_type,
+                 :upc,
+                 :make, :model, :year, :code,
+                 :sort,
+                 :hl).
+        merge(page: @page,
+              per_page: @per_page)
   end
 end

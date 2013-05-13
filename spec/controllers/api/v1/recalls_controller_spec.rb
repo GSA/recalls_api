@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Api::V1::RecallsController do
   disconnect_sunspot
+  it_behaves_like 'recalls controller', [:index, :search]
 
   describe '#index' do
     context 'when the format is json' do
@@ -9,7 +10,7 @@ describe Api::V1::RecallsController do
       let(:search_results) { mock('search results', as_json: results_hash) }
 
       before do
-        RecallSearch.should_receive(:recent).with('page' => '2', 'per_page' => '15').and_return(search_results)
+        RecallSearch.should_receive(:recent).with(page: 2, per_page: 15).and_return(search_results)
         get 'index', format: :json, page: '2', per_page: '15'
       end
 
@@ -41,7 +42,7 @@ describe Api::V1::RecallsController do
         'model' => 'model1',
         'year' => '2009',
         'code' => 'v',
-        'page' => '2', 'per_page' => '3',
+        'page' => 2, 'per_page' => 3,
         'sort' => 'date',
         'hl' => '1' }.freeze
     end
