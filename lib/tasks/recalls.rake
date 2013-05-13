@@ -2,10 +2,10 @@ namespace :usagov do
   namespace :recalls do
     desc 'Load CDC food/drug recall data from RSS feed'
     task import_cdc_data: :environment do
-      CdcData.import_from_rss_feed('http://www.fda.gov/AboutFDA/ContactFDA/StayInformed/RSSFeeds/Recalls/rss.xml', 'food', true)
+      CdcData.import_from_rss_feed('http://www.fda.gov/AboutFDA/ContactFDA/StayInformed/RSSFeeds/DrugRecalls/rss.xml', 'drug', true)
+      CdcData.import_from_rss_feed('http://www.fda.gov/AboutFDA/ContactFDA/StayInformed/RSSFeeds/FoodSafety/rss.xml', 'food', true)
       CdcData.import_from_rss_feed('http://www.fsis.usda.gov/RSS/usdarss.xml', 'food', true)
       CdcData.import_from_rss_feed('http://www2c.cdc.gov/podcasts/createrss.asp?c=146', 'food')
-      CdcData.import_from_rss_feed('http://www.fda.gov/AboutFDA/ContactFDA/StayInformed/RSSFeeds/DrugRecalls/rss.xml', 'drug')
     end
 
     desc 'Load CPSC recall data from XML feed'
