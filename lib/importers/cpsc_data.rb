@@ -1,6 +1,8 @@
 require 'rexml/document'
 
-class CpscData
+module CpscData
+  extend Importer
+
   def self.import_from_xml_feed(url)
     begin
       REXML::Document.new(Net::HTTP.get(URI(url))).elements.each('message/results/result') do |element|
@@ -10,6 +12,8 @@ class CpscData
           recall = Recall.where(organization: 'CPSC', recall_number: recall_number).first_or_initialize
           recall.y2k = element.attributes['y2k']
           recall.recalled_on = Date.parse(element.attributes['recDate']) rescue nil
+          recall_url = element.attributes['recallURL'].strip
+          recall.url = get_cpsc_url(recall_number, URI(recall_url)) || recall_url
 
           attributes = {
               manufacturer: element.attributes['manufacturer'],
@@ -38,5 +42,16 @@ class CpscData
     rescue => e
       Rails.logger.error(e.message)
     end
+  end
+
+  def self.get_cpsc_url(recall_number, recall_url)
+    cpsc_url = get_url_from_redirect(URI(recall_url))
+    unless cpsc_url
+      legacy_url = "http://www.cpsc.gov/cpscpub/prerel/prhtml#{recall_number[0..1]}/#{recall_number}.html"
+      params = {query: legacy_url, OldURL: true, autodisplay: true }
+      search_url = "http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?#{params.to_param}"
+      cpsc_url = get_url_from_redirect(URI(search_url))
+    end
+    cpsc_url
   end
 end

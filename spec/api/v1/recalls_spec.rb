@@ -45,6 +45,7 @@ describe 'Recalls API V1' do
     Recall.create!(organization: 'CPSC',
                    recall_number: '12345',
                    y2k: 12345,
+                   url: 'http://www.cpsc.gov/en/Recalls/2010/Violation-of-Federal-Mattress-Flammability-Standard-Prompts-Recall-of-Ottoman-Bed-Mattresses-by-PBteen/',
                    recalled_on: Date.parse('2010-03-01')) do |r|
       r.recall_details.build(detail_type: 'Manufacturer', detail_value: 'Acme Corp')
       r.recall_details.build(detail_type: 'ProductType', detail_value: 'Dangerous Stuff')
@@ -57,6 +58,7 @@ describe 'Recalls API V1' do
     Recall.create!(organization: 'CPSC',
                    recall_number: '10187',
                    y2k: 110187,
+                   url: 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/',
                    recalled_on: Date.parse('2010-04-01')) do |r|
       r.recall_details.build(detail_type: 'Manufacturer', detail_value: 'Crate & Barrel')
       r.recall_details.build(detail_type: 'ProductType', detail_value: 'Bottles (Sports/Water/Thermos)')
@@ -157,7 +159,7 @@ describe 'Recalls API V1' do
         item.should == { organization: 'CPSC',
                          recall_number: '10187',
                          recall_date: '2010-04-01',
-                         recall_url: 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html',
+                         recall_url: 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/',
                          manufacturers: ['Crate & Barrel'],
                          product_types: ['Bottles (Sports/Water/Thermos)'],
                          descriptions: ['Glass Water Bottles'],
@@ -169,7 +171,7 @@ describe 'Recalls API V1' do
         item.should == { organization: 'CPSC',
                          recall_number: '12345',
                          recall_date: '2010-03-01',
-                         recall_url: 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html',
+                         recall_url: 'http://www.cpsc.gov/en/Recalls/2010/Violation-of-Federal-Mattress-Flammability-Standard-Prompts-Recall-of-Ottoman-Bed-Mattresses-by-PBteen/',
                          manufacturers: ['Acme Corp'],
                          product_types: ['Dangerous Stuff'],
                          descriptions: ['Baby Stroller can be dangerous to children'],
@@ -182,7 +184,7 @@ describe 'Recalls API V1' do
             organization: Recall::NHTSA,
             recall_number: '123456',
             recall_date: '2010-01-01',
-            recall_url: 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES',
+            recall_url: 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=123456',
             records: [{ component_description: 'comp desc1',
                         make: 'automaker1',
                         manufacturer: 'manufacturer1',
@@ -267,23 +269,23 @@ describe 'Recalls API V1' do
         item = items[3]
         item[:title].should == 'Glass Water Bottles'
         item[:description].should == 'Bottles (Sports/Water/Thermos)'
-        item[:link].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
+        item[:link].should == 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/'
         item[:pub_date].should == 'Thu, 01 Apr 2010 00:00:00 +0000'
-        item[:guid].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml10/10187.html'
+        item[:guid].should == 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/'
 
         item = items[4]
         item[:title].should == 'Baby Stroller can be dangerous to children'
         item[:description].should == 'Dangerous Stuff'
-        item[:link].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
+        item[:link].should == 'http://www.cpsc.gov/en/Recalls/2010/Violation-of-Federal-Mattress-Flammability-Standard-Prompts-Recall-of-Ottoman-Bed-Mattresses-by-PBteen/'
         item[:pub_date].should == 'Mon, 01 Mar 2010 00:00:00 +0000'
-        item[:guid].should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html'
+        item[:guid].should == 'http://www.cpsc.gov/en/Recalls/2010/Violation-of-Federal-Mattress-Flammability-Standard-Prompts-Recall-of-Ottoman-Bed-Mattresses-by-PBteen/'
 
         item = items[5]
         item[:title].should == 'FUEL SYSTEM, GASOLINE:DELIVERY:FUEL PUMP compound FROM MONACO COACH CORPORATION'
         item[:description].should == 'Recalls for: automaker1 / model1, automaker2 / model2'
-        item[:link].should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
+        item[:link].should == 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=123456'
         item[:pub_date].should == 'Fri, 01 Jan 2010 00:00:00 +0000'
-        item[:guid].should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES'
+        item[:guid].should == 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=123456'
       end
     end
   end
@@ -375,7 +377,7 @@ describe 'Recalls API V1' do
           item.should == { organization: 'CPSC',
                            recall_number: '12345',
                            recall_date: '2010-03-01',
-                           recall_url: 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html',
+                           recall_url: 'http://www.cpsc.gov/en/Recalls/2010/Violation-of-Federal-Mattress-Flammability-Standard-Prompts-Recall-of-Ottoman-Bed-Mattresses-by-PBteen/',
                            manufacturers: ['Acme Corp'],
                            product_types: ['Dangerous Stuff'],
                            descriptions: ['Baby Stroller can be dangerous to children'],
@@ -396,7 +398,7 @@ describe 'Recalls API V1' do
           item.should == { organization: 'CPSC',
                            recall_number: '12345',
                            recall_date: '2010-03-01',
-                           recall_url: 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html',
+                           recall_url: 'http://www.cpsc.gov/en/Recalls/2010/Violation-of-Federal-Mattress-Flammability-Standard-Prompts-Recall-of-Ottoman-Bed-Mattresses-by-PBteen/',
                            manufacturers: ['Acme Corp'],
                            product_types: ['Dangerous Stuff'],
                            descriptions: ["Baby \uE000Stroller\uE001 can be dangerous to children"],
@@ -426,7 +428,7 @@ describe 'Recalls API V1' do
               organization: Recall::NHTSA,
               recall_number: '123456',
               recall_date: '2010-01-01',
-              recall_url: 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES',
+              recall_url: 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=123456',
               records: [{ component_description: 'comp desc1',
                           make: 'automaker1',
                           manufacturer: 'manufacturer1',
@@ -473,7 +475,7 @@ describe 'Recalls API V1' do
               organization: Recall::NHTSA,
               recall_number: '123456',
               recall_date: '2010-01-01',
-              recall_url: 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=123456&summary=true&PrintVersion=YES',
+              recall_url: 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=123456',
               records: [{ component_description: 'comp desc1',
                           make: 'automaker1',
                           manufacturer: 'manufacturer1',

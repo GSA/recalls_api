@@ -3,6 +3,7 @@ require 'spec_helper'
 
 describe CdcData do
   disconnect_sunspot
+
   describe '.import_from_rss_feed' do
 
     before { Recall.destroy_all }
@@ -17,11 +18,10 @@ describe CdcData do
             with(URI('http://www2c.cdc.gov/podcasts/createrss.asp?c=146')).
             and_return(feed_content)
 
-        response = mock(Net::HTTPFound, code: '302', body: redirect_content)
-        Net::HTTP.should_receive(:get_response).
+        CdcData.should_receive(:get_url_from_redirect).
             at_least(:once).
             with(URI('http://www2c.cdc.gov/podcasts/download.asp?af=h&f=8625997')).
-            and_return(response)
+            and_return('http://www.fsis.usda.gov/fsis_recalls/RNR_067_2012/index.asp')
       end
 
       it 'should persist food recalls' do
@@ -111,14 +111,5 @@ describe CdcData do
     end
   end
 
-  describe '.get_url_from_redirect' do
-    context 'when the response body is blank' do
-      it 'should return nil' do
-        uri = URI('http://www2c.cdc.gov/podcasts/download.asp?af=h&f=8625997')
-        response = mock(Net::HTTPFound, code: '302', body: '')
-        Net::HTTP.should_receive(:get_response).with(uri).and_return(response)
-        CdcData.get_url_from_redirect(uri).should be_nil
-      end
-    end
-  end
+
 end

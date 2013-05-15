@@ -1,4 +1,4 @@
-class NhtsaData
+module NhtsaData
   def self.import_from_tab_delimited_feed(url)
     begin
       file = Tempfile.new("nhtsa")

@@ -1,4 +1,6 @@
-class CdcData
+module CdcData
+  extend Importer
+
   def self.import_from_rss_feed(url, food_type, authoritative_source = false)
     require 'rss/2.0'
     begin
@@ -29,14 +31,6 @@ class CdcData
     source_url = get_url_from_redirect(uri) if uri.host =~ /\.cdc\.gov$/i
     source_url ||= url
     source_url
-  end
-
-  def self.get_url_from_redirect(uri)
-    res = Net::HTTP.get_response(uri)
-    if res.code == '302'
-      doc = Nokogiri::HTML(res.body)
-      doc.css('a').first.attr(:href) if doc.css('a').present?
-    end
   end
 
   def self.extract_organization(url)

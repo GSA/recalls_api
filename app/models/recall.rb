@@ -1,10 +1,11 @@
 class Recall < ActiveRecord::Base
-  attr_accessible :organization, :recall_number, :recalled_on, :y2k
+  attr_accessible :organization, :recall_number, :recalled_on, :y2k, :url
   has_many :recall_details, dependent: :destroy
   has_many :auto_recalls, dependent: :destroy
   has_one :food_recall, dependent: :destroy
 
   validates_presence_of :organization, :recall_number
+  validates_presence_of :url, if: :cpsc?
 
   FDA = 'FDA'.freeze
   USDA = 'USDA'.freeze
@@ -238,9 +239,9 @@ class Recall < ActiveRecord::Base
     when food_or_drug?
       food_recall.url
     when cpsc?
-      "http://www.cpsc.gov/cpscpub/prerel/prhtml#{self.recall_number.to_s[0..1]}/#{self.recall_number}.html" unless self.recall_number.blank?
+      url
     when nhtsa?
-      "http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=#{self.recall_number}&summary=true&PrintVersion=YES"
+      "http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=#{recall_number}"
     end
   end
 
@@ -271,7 +272,7 @@ class Recall < ActiveRecord::Base
   def recall_details_hash
     @recall_details_hash ||= begin
       recall_details_hash = {}
-      recall_details.order(:id).each do |rd|
+      recall_details.each do |rd|
         key = rd.detail_type.underscore.to_sym
         if recall_details_hash[key]
           recall_details_hash[key] << rd.detail_value

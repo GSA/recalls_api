@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe CpscData do
   disconnect_sunspot
+
   describe '.import_from_xml_feed' do
     let(:url) { 'http://www.cpsc.gov/cgibin/CPSCUpcWS/CPSCUpcSvc.asmx/getRecallByDate?endDate=2012-04-01&password=&startDate=2010-04-01&userId='.freeze }
 
@@ -14,6 +15,13 @@ describe CpscData do
             at_least(:once).
             with(URI(url)).
             and_return(content)
+        CpscData.should_receive(:get_cpsc_url).
+            at_least(:once).
+          with('10187', URI('http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10187')).
+          and_return('http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/')
+        CpscData.should_receive(:get_cpsc_url).
+            with('10727', URI('http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10727')).
+            and_return(nil)
       end
 
       it 'should persist CPSC data' do
@@ -23,6 +31,7 @@ describe CpscData do
         first_recall = Recall.find_by_recall_number('10187')
         first_recall.y2k.should == 110187
         first_recall.recalled_on.to_s(:db).should == '2010-04-01'
+        first_recall.url.should == 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/'
 
         first_recall.recall_details.count.should == 7
         recall_details = {}
@@ -44,6 +53,7 @@ describe CpscData do
         recall = Recall.find_by_recall_number('10727')
         recall.y2k.should == 110187
         recall.recalled_on.to_s(:db).should == '2010-04-01'
+        recall.url.should == 'http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10727'
 
         recall_details = {}
         recall.recall_details.each do |rd|
@@ -67,6 +77,22 @@ describe CpscData do
       it 'should log the error' do
         Rails.logger.should_receive(:error).with('getaddrinfo: nodename nor servname provided, or not known')
         CpscData.import_from_xml_feed(url)
+      end
+    end
+  end
+
+  describe '.get_cpsc_url' do
+    context 'when recall_url does not redirect' do
+      it 'should try get_url_from_redirect using the old URL format' do
+        CpscData.should_receive(:get_url_from_redirect).
+            with(URI('http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10187')).
+            and_return(nil)
+        CpscData.should_receive(:get_url_from_redirect).
+            with(URI('http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?OldURL=true&autodisplay=true&query=http%3A%2F%2Fwww.cpsc.gov%2Fcpscpub%2Fprerel%2Fprhtml10%2F10187.html')).
+            and_return('http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/')
+
+        CpscData.get_cpsc_url('10187', 'http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10187').
+            should == 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/'
       end
     end
   end

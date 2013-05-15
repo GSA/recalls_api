@@ -9,11 +9,27 @@ describe Recall do
   it { should validate_presence_of :recall_number }
   it { should validate_presence_of :organization }
 
-  it 'should create a new instance given valid attributes' do
-    Recall.create!(recall_number: '12345',
-                   organization: 'CPSC',
-                   y2k: 12345,
-                   recalled_on: Date.parse('2010-03-01'))
+  it 'should be valid given valid attributes' do
+    Recall.new(recall_number: '12345',
+               organization: 'NHTSA',
+               y2k: 12345,
+               recalled_on: Date.parse('2010-03-01')).should be_valid
+  end
+
+  context 'when the organization is CPSC' do
+    it 'should require the presence of URL' do
+      Recall.new(recall_number: '10187',
+                 organization: 'CPSC',
+                 y2k: 12345,
+                 recalled_on: Date.parse('2010-03-01')).should_not be_valid
+
+      Recall.new(recall_number: '10187',
+                 organization: 'CPSC',
+                 y2k: 12345,
+                 recalled_on: Date.parse('2010-03-01'),
+                 url: 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/').
+          should be_valid
+    end
   end
 
   describe '.search_for' do
@@ -222,13 +238,13 @@ describe Recall do
     end
 
     context 'when organization is CPSC' do
-      subject { Recall.new(recall_number: '12345', organization: 'CPSC').recall_url }
-      it { should == 'http://www.cpsc.gov/cpscpub/prerel/prhtml12/12345.html' }
+      subject { Recall.new(recall_number: '12345', organization: 'CPSC', url: 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/').recall_url }
+      it { should == 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/' }
     end
 
     context 'when organization is NHTSA' do
       subject { Recall.new(recall_number: '12345', organization: 'NHTSA').recall_url }
-      it { should == 'http://www-odi.nhtsa.dot.gov/recalls/recallresults.cfm?start=1&SearchType=QuickSearch&rcl_ID=12345&summary=true&PrintVersion=YES' }
+      it { should == 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=12345' }
     end
   end
 

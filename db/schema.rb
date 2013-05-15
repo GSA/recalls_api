@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124052409) do
+ActiveRecord::Schema.define(:version => 20130515210134) do
 
   create_table "auto_recalls", :force => true do |t|
     t.integer  "recall_id"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20121124052409) do
     t.string   "organization",  :limit => 10
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.string   "url"
   end
 
   add_index "recalls", ["recall_number"], :name => "index_recalls_on_recall_number"

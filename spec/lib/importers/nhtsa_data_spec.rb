@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe NhtsaData do
   disconnect_sunspot
+
   describe '.import_from_tab_delimited_feed' do
     let(:url) { 'http://www-odi.nhtsa.dot.gov/downloads/folders/recalls/mIBT4jvpyrRM6YJ3QIyC/flat_recalls_new.txt'.freeze }
 
@@ -21,6 +22,7 @@ describe NhtsaData do
         Recall.count.should == 3
         recall = Recall.find_by_recall_number('02E030000')
         recall.recalled_on.to_s(:db).should == '2002-04-26'
+        recall.recall_url.should == 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=02E030000'
 
         recall_details = Hash[recall.recall_details.collect { |rd| [rd.detail_type, rd.detail_value] }]
         recall_details['ManufacturerCampaignNumber'].should be_nil
@@ -46,6 +48,7 @@ describe NhtsaData do
 
         recall = Recall.find_by_recall_number('02V269000')
         recall.recalled_on.to_s(:db).should == '2002-10-03'
+        recall.recall_url.should == 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=02V269000'
 
         recall_details = Hash[recall.recall_details.collect { |rd| [rd.detail_type, rd.detail_value] }]
         recall_details['ManufacturerCampaignNumber'].should == 'SCO277'
@@ -57,6 +60,7 @@ describe NhtsaData do
 
         recall = Recall.find_by_recall_number('06V052000')
         recall.recalled_on.to_s(:db).should == '2006-02-16'
+        recall.recall_url.should == 'http://www-odi.nhtsa.dot.gov/owners/SearchResults?searchType=ID&targetCategory=R&searchCriteria.nhtsa_ids=06V052000'
         recall.recall_details.where(detail_type: 'ManufacturerCampaignNumber').count.should == 1
         recall.auto_recalls.count.should == 2
 
