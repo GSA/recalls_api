@@ -33,7 +33,7 @@ module CpscData
                                                         detail_value: detail_value)
             else
               recall.recall_details.where(detail_type: detail_type,
-                                          detail_value: detail_value).first_or_create!
+                                          detail_value: StringSanitizer.sanitize(detail_value)).first_or_create!
             end
           end
           recall.save!

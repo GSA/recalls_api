@@ -19,7 +19,7 @@ describe CpscData do
             at_least(:once).
           with('10187', URI('http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10187')).
           and_return('http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/')
-        CpscData.should_receive(:get_cpsc_url).
+        CpscData.should_receive(:get_cpsc_url).twice.
             with('10727', URI('http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10727')).
             and_return(nil)
       end
@@ -34,36 +34,21 @@ describe CpscData do
         first_recall.url.should == 'http://www.cpsc.gov/en/Recalls/2010/Crate-and-Barrel-Recalls-Glass-Water-Bottles-Due-to-Laceration-Hazard/'
 
         first_recall.recall_details.count.should == 7
-        recall_details = {}
-        first_recall.recall_details.each do |rd|
-          if recall_details[rd.detail_type].nil?
-            recall_details[rd.detail_type] = [rd.detail_value]
-          else
-            recall_details[rd.detail_type] << rd.detail_value
-          end
-        end
+        recall_details = first_recall.recall_details_hash
 
-        recall_details['Manufacturer'].should == ['Crate & Barrel']
-        recall_details['ProductType'].should == ['Bottles (Sports/Water/Thermos)']
-        recall_details['Description'].should == ['Glass Water Bottles']
-        recall_details['UPC'].should == %w(987654321 876543219)
-        recall_details['Hazard'].should == %w(Laceration)
-        recall_details['Country'].should == %w(China)
+        recall_details[:manufacturer].should == ['Crate & Barrel']
+        recall_details[:product_type].should == ['Bottles (Sports/Water/Thermos)']
+        recall_details[:description].should == ['Glass Water Bottles']
+        recall_details[:upc].should == %w(987654321 876543219)
+        recall_details[:hazard].should == %w(Laceration)
+        recall_details[:country].should == %w(China)
 
         recall = Recall.find_by_recall_number('10727')
         recall.y2k.should == 110187
         recall.recalled_on.to_s(:db).should == '2010-04-01'
         recall.url.should == 'http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&category=995,1098,990,991,992,993,994,1031&autodisplay=true&query=10727'
-
-        recall_details = {}
-        recall.recall_details.each do |rd|
-          if recall_details[rd.detail_type].nil?
-            recall_details[rd.detail_type] = [rd.detail_value]
-          else
-            recall_details[rd.detail_type] << rd.detail_value
-          end
-        end
-        recall_details['UPC'].should be_nil
+        recall.recall_details_hash[:upc].should be_nil
+        recall.recall_details_hash[:description].should == ['PBteen Ottoman Beds']
       end
     end
 
