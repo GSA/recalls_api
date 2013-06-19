@@ -13,6 +13,7 @@ gem 'airbrake'
 gem 'newrelic_rpm'
 
 gem 'capistrano', group: :development
+gem 'coveralls', require: false
 
 group :development, :test do
   gem 'rspec-rails'

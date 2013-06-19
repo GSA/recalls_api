@@ -2,6 +2,7 @@ Recalls API Server
 ==============
 
 [![Build Status](https://travis-ci.org/GSA-OCSIT/recalls_api.png)](https://travis-ci.org/GSA-OCSIT/recalls_api)
+[![Coverage Status](https://coveralls.io/repos/eigenpath/recalls_api/badge.png)](https://coveralls.io/r/eigenpath/recalls_api)
 
 When you're buying and using products, safety comes first. 
 
