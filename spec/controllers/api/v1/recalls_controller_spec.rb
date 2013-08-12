@@ -7,7 +7,7 @@ describe Api::V1::RecallsController do
   describe '#index' do
     context 'when the format is json' do
       let(:results_hash) { { total: 1 } }
-      let(:search_results) { mock('search results', as_json: results_hash) }
+      let(:search_results) { double('search results', as_json: results_hash) }
 
       before do
         RecallSearch.should_receive(:recent).with(page: 2, per_page: 15).and_return(search_results)
@@ -47,7 +47,7 @@ describe Api::V1::RecallsController do
         'hl' => '1' }.freeze
     end
     let(:results_hash) { { total: 1 }.freeze }
-    let(:search_results) { mock('search results', as_json: results_hash) }
+    let(:search_results) { double('search results', as_json: results_hash) }
 
     before do
       RecallSearch.should_receive(:new).
