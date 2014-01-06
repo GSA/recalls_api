@@ -20,7 +20,7 @@ The server code that runs our [Recalls API](http://usasearch.howto.gov/developer
 
 ### Ruby
 
-You'll need [Ruby 2.0](http://www.ruby-lang.org/en/downloads/).
+This code is currently tested against [Ruby 2.1](http://www.ruby-lang.org/en/downloads/).
 
 ### Gems
 
