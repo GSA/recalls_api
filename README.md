@@ -1,8 +1,8 @@
 Recalls API Server
 ==============
 
-[![Build Status](https://travis-ci.org/GSA-OCSIT/recalls_api.png)](https://travis-ci.org/GSA-OCSIT/recalls_api)
-[![Coverage Status](https://coveralls.io/repos/GSA-OCSIT/recalls_api/badge.png?branch=master)](https://coveralls.io/r/GSA-OCSIT/recalls_api?branch=master)
+[![Build Status](https://travis-ci.org/GSA/recalls_api.png)](https://travis-ci.org/GSA/recalls_api)
+[![Coverage Status](https://coveralls.io/repos/GSA/recalls_api/badge.png?branch=master)](https://coveralls.io/r/GSA/recalls_api?branch=master)
 
 When you're buying and using products, safety comes first. 
 
@@ -108,6 +108,6 @@ By accessing this Recalls API server, you agree to our [Terms of Service](http:/
 Feedback
 --------
 
-You can send feedback via [Github Issues](https://github.com/GSA-OCSIT/recalls_api/issues).
+You can send feedback via [Github Issues](https://github.com/GSA/recalls_api/issues).
 
 -----
