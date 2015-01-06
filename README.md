@@ -1,22 +1,7 @@
-Recalls API Server
+Recalls API
 ==============
 
-[![Build Status](https://travis-ci.org/GSA/recalls_api.png)](https://travis-ci.org/GSA/recalls_api)
-[![Coverage Status](https://coveralls.io/repos/GSA/recalls_api/badge.png?branch=master)](https://coveralls.io/r/GSA/recalls_api?branch=master)
-
-When you're buying and using products, safety comes first. 
-
-## Access the Data
-
-Use our [Recalls API](http://usasearch.howto.gov/developer/recalls.html) to tap into a list of car, drug, food, and product safety data and recalls.
-
-See the most recent recalls in [JSON](http://api.usa.gov/recalls/recent.json) or [RSS](http://api.usa.gov/recalls/recent.rss).
-
-You can also see how this data is used when [searching for recalls on USA.gov](http://search.usa.gov/search/news?affiliate=usagov&channel=66).
-
-## Contribute to the Code
-
-The server code that runs our [Recalls API](http://usasearch.howto.gov/developer/recalls.html) is here on Github. If you're a Ruby developer, keep reading. Fork this repo to add features (such as additional datasets) or fix bugs.
+**Note:** The endpoint for our [Recalls API](http://search.digitalgov.gov/developer/recalls.html) will be deprecated on January 31, 2015. The source code will remain on here on Github, if you'd like to clone or fork it.
 
 ### Ruby
 
@@ -65,19 +50,11 @@ Fire up a server and try it all out:
 
 <http://127.0.0.1:3000/search.json?query=stroller>
 
-### API Versioning
-
-We support API versioning with json format. The current version is v1.
-
-You can specify a a specific JSON version of recalls data like this:
-
-    curl -H 'Accept: application/vnd.usagov.recalls.v1' http://localhost:3000/search.json
-    
 ### Parameters
 
 Seven generic parameters are accepted: (1) query, (2) organization, (3) start_date, (4) end_date, (5) page, (6) per_page, and (7) sort. There are additional parameters that are specific to food, product, and car safety recalls. None are required.
 
-Full documentation on the parameters is in our [Recalls API documentation](http://usasearch.howto.gov/developer/recalls.html#parameters).
+Full documentation on the parameters is in our [Recalls API documentation](http://search.digitalgov.gov/developer/recalls.html#parameters).
 
 ## Tests
 
@@ -91,23 +68,8 @@ Make sure the tests run:
 
 ## Code Coverage
 
-We track test coverage of the codebase over time, to help identify areas where we could write better tests and to see when poorly tested code got introduced.
+Track test coverage of the codebase over time to help identify areas where better tests could be written and to see when poorly tested code got introduced.
 
 After running your tests, view the report by opening `coverage/rcov/index.html` in your browser.
 
 Click around on the files that have < 100% coverage to see what lines weren't exercised.
-
-## License
-
-This project is covered under the terms of the GNU General Public License, version 2 or later.
-
-## Terms of Use
-
-By accessing this Recalls API server, you agree to our [Terms of Service](http://www.usa.gov/About/developer-resources/terms-of-service.shtml).
-
-Feedback
---------
-
-You can send feedback via [Github Issues](https://github.com/GSA/recalls_api/issues).
-
------
