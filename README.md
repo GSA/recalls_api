@@ -1,7 +1,7 @@
 Recalls API
 ==============
 
-**Note:** The endpoint for our Recalls API was deprecated on March 27, 2015. The source code will remain on here on Github, if you'd like to clone or fork it.
+**Note:** The endpoint for our Recalls API was deprecated on March 27, 2015. The source code will remain here on Github, if you'd like to clone or fork it.
 
 ## Ruby
 
