@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message outcome="success" transactionID="9BB7C3D1-108E-4C57-A08B-0A020889FAED">
+  <results>
+    <result UPC="987654321" recallNo="10187" recallURL="http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&amp;category=995,1098,990,991,992,993,994,1031&amp;autodisplay=true&amp;query=10187" recDate="2010-04-01" y2k="110187" manufacturer="Crate &amp; Barrel" type="Bottles (Sports/Water/Thermos)" prname="Glass Water Bottles" hazard="Laceration" country_mfg="China" />
+    <result UPC="876543219" recallNo="10187" recallURL="http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&amp;category=995,1098,990,991,992,993,994,1031&amp;autodisplay=true&amp;query=10187" recDate="2010-04-01" y2k="110187" manufacturer="Crate &amp; Barrel" type="Bottles (Sports/Water/Thermos)" prname="Glass Water Bottles" hazard="Laceration" country_mfg="China" />
+    <result UPC="" recallNo="10727" recallURL="http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&amp;category=995,1098,990,991,992,993,994,1031&amp;autodisplay=true&amp;query=10727" recDate="2010-04-01" y2k="110187" manufacturer="PBteen" type="Beds/Cots" prname="PBteen Ottoman Beds" hazard="Fire &amp; Fire-Related Burn" country_mfg="Taiwan" />
+    <result UPC="" recallNo="10727" recallURL="http://cs.cpsc.gov/ConceptDemo/SearchCPSC.aspx?SearchCategory=Recalls%20News%20Releases&amp;category=995,1098,990,991,992,993,994,1031&amp;autodisplay=true&amp;query=10727" recDate="2010-04-01" y2k="110187" manufacturer="PBteen" type="Beds/Cots" prname="pbTEEN Ottoman   Beds" hazard="Fire &amp; Fire-Related Burn" country_mfg="Taiwan" />
+  </results>
+</message>
