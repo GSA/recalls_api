@@ -5,7 +5,7 @@ class CPSC
     params = { format: 'json' }.merge(extra_params)
     response = Typhoeus.get(URL, params: params)
     unless response.success?
-      raise response.return_message
+      raise ApiError, response.return_message
     end
 
     JSON.parse(response.body)
