@@ -37,17 +37,13 @@ http_interactions:
       Cache-Control:
       - no-cache
       Expires:
-      - Wed, 26 Sep 2018 05:48:01 GMT
+      - Wed, 26 Sep 2018 06:26:26 GMT
       Date:
-      - Wed, 26 Sep 2018 05:48:01 GMT
+      - Wed, 26 Sep 2018 06:26:26 GMT
       Content-Length:
       - '12961'
       Connection:
       - keep-alive
-      Set-Cookie:
-      - ZNPCQ003-33333100=4c71d8c7; Path=/RestWebServices; Domain=saferproducts.gov
-      - SGovSNI=!IRq4Qt4vsnX2D5RDWJueYmiUIwhLoIfnkW6/2NmsMnEB5mUxc/Oaav7nzBbU3ltnMzwm8SRhwDGhG8s=;
-        path=/; Httponly; Secure
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -55,5 +51,5 @@ http_interactions:
     http_version: '1.1'
     adapter_metadata:
       effective_url: https://www.saferproducts.gov/RestWebServices/Recall?format=json&RecallDescription=BlueStar
-  recorded_at: Wed, 26 Sep 2018 05:48:01 GMT
+  recorded_at: Wed, 26 Sep 2018 06:26:26 GMT
 recorded_with: VCR 4.0.0
