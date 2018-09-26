@@ -129,6 +129,7 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    vcr (4.0.0)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -147,6 +148,7 @@ DEPENDENCIES
   sqlite3
   typhoeus
   tzinfo-data
+  vcr
 
 RUBY VERSION
    ruby 2.5.0p0

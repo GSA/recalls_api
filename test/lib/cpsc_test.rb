@@ -6,12 +6,10 @@ class CPSCTest < ActiveSupport::TestCase
   end
 
   test "returns the data" do
-    fixture = File.expand_path('../../fixtures/files/cpsc.json', __FILE__)
-    data = File.read(fixture)
-    response = Typhoeus::Response.new(code: 200, body: data.to_json)
-    stub_request(response)
-
-    assert_equal data, CPSC.get_recalls
+    VCR.use_cassette('cpsc') do
+      data = CPSC.get_recalls(RecallDescription: 'BlueStar')
+      assert_equal 3, data.size
+    end
   end
 
   test "raises an exception on a failure" do
